@@ -21,4 +21,14 @@ public class PeopleFieldTest {
         Integer i = 0;
         Assert.assertTrue(flag);
     }
+
+    @Test
+    public void testInvalidDateCreateField() throws Exception {
+        try {
+            PeopleField pf = new PeopleField(-3, 3, 3.0);
+        }
+        catch (IllegalArgumentException e) {
+            Assert.assertTrue(true);
+        }
+    }
 }
