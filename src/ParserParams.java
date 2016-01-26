@@ -61,7 +61,7 @@ public class ParserParams {
         try {
             commandLine = cmdLinePosixParser.parse(posixOptions, commandLineArguments);
 
-            if (commandLine.hasOption("r") && commandLine.hasOption("w") &&
+            if (commandLine.hasOption("r") && commandLine.hasOption("c") &&
                     commandLine.hasOption("p")) {
                 valuesParams.put("Rows", commandLine.getOptionValue("r"));
                 valuesParams.put("Columns", commandLine.getOptionValue("c"));
