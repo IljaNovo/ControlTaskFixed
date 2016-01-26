@@ -1,9 +1,9 @@
 public class main {
 
     public static void main(String[] args) {
-        PeopleField pf = new PeopleField(3, 3, 0.5);
+        PeopleField pf = new PeopleField(9, 9, 0.5);
 
-        System.out.println(pf.printMap());
+        System.out.println(pf.searchGroup());
 
         int i = 0;
     }

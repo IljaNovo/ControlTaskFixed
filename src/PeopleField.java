@@ -161,20 +161,30 @@ public class PeopleField {
     private String generateReport(List<Integer> countPersInGroups) {
         List<RiskGroup> allRiskGroups = calculCountGroup(countPersInGroups);
 
+        String report = "EMERGENCY PREVENTION SYSTEM\n";
+        report += "-------------------------------------------------------------\n";
+        report += "-------------------------------------------------------------\n";
 
+        report += printMap() + "\n";
 
-        return "";
+        report += "Risk group report:\n";
+        report += "-------------------------------------------------------------\n";
+
+        for (RiskGroup item : allRiskGroups) {
+            report += String.format("%s: %d groups;\n", item.name, item.countGroup);
+        }
+        return report;
     }
 
     private List<RiskGroup> calculCountGroup(List<Integer> countPersInGroups) {
         int countGroup = 0;
         List<RiskGroup> allRiskGroups = new ArrayList<>();
 
-        allRiskGroups.add(new RiskGroup("CRITICAL", 0));
-        allRiskGroups.add(new RiskGroup("MAJOR", 0));
-        allRiskGroups.add(new RiskGroup("NORMAL", 0));
-        allRiskGroups.add(new RiskGroup("MINOR", 0));
         allRiskGroups.add(new RiskGroup("NONE", 0));
+        allRiskGroups.add(new RiskGroup("MINOR", 0));
+        allRiskGroups.add(new RiskGroup("NORMAL", 0));
+        allRiskGroups.add(new RiskGroup("MAJOR", 0));
+        allRiskGroups.add(new RiskGroup("CRITICAL", 0));
 
         for (Integer item : countPersInGroups) {
             if (item > 13) {
