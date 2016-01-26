@@ -1,15 +1,20 @@
+import java.util.ArrayDeque;
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class main {
 
     public static void main(String[] args) {
-        String[][] groups = new String[2][2];
+        Queue<Integer> buffer = new LinkedList<>();
 
-        String[][] clone = new String[groups.length][groups[0].length];
+        buffer.offer(54);
+        buffer.offer(0);
+        buffer.offer(3);
+        buffer.offer(5);
+        buffer.offer();
 
-        for (int i = 0; i < groups.length; ++i) {
-            clone[i] = groups[0].clone();
-        }
-        clone[0][0] = "fdhsf";
+        Integer i = buffer.remove();
 
-        Integer i = 0;
+        Double d = 0.0;
     }
 }

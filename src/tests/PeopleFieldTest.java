@@ -6,7 +6,7 @@ public class PeopleFieldTest {
     @Test
     public void testGenerateField() throws Exception {
         PeopleField pf = new PeopleField(3, 3, 1.0);
-        String[][] answer = pf.getGroups();
+        String[][] answer = pf.getPeopleField();
         boolean flag = true;
 
         for (int i = 0; i < answer.length; ++i) {
