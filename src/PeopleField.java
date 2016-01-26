@@ -2,7 +2,17 @@ import java.util.*;
 
 public class PeopleField {
 
-    final class CoordinMan {
+    private final class RiskGroup {
+        public String name;
+        public Integer countGroup;
+
+        public RiskGroup(String name, Integer countGroup) {
+            this.name = name;
+            this.countGroup = countGroup;
+        }
+    }
+
+    private final class CoordinMan {
 
         public int row;
         public int column;
@@ -45,17 +55,18 @@ public class PeopleField {
         }
     }
 
-    public void searchGroup() {
+    public String searchGroup() {
         boolean[][] viewedPeople = new boolean[this.mapOfGroups.length][this.mapOfGroups[0].length];
-        List<Integer> groups = new ArrayList<>();
+        List<Integer> countPersInGroups = new ArrayList<>();
 
         for (int i = 0; i < this.mapOfGroups.length; ++i) {
             for (int j = 0; j < this.mapOfGroups[0].length; ++j) {
                 if (viewedPeople[i][j] != true) {
-                    groups.add(identifGroup(viewedPeople, new CoordinMan(i, j)));
+                    countPersInGroups.add(identifGroup(viewedPeople, new CoordinMan(i, j)));
                 }
             }
         }
+        return generateReport(countPersInGroups);
     }
 
     private int identifGroup(boolean[][] viewedPeople, CoordinMan man) {
@@ -106,8 +117,82 @@ public class PeopleField {
         }
     }
 
-    public String generateReport() {
+    public String printMap() {
+        StringBuilder answer = new StringBuilder();
+
+        for (int i = 0; i < mapOfGroups[0].length; ++i) {
+            answer.append("   ");
+            answer.append(i);
+        }
+        answer.append('\n');
+
+        for (int i = 0; i < mapOfGroups.length; ++i) {
+            answer.append(i);
+
+            if (mapOfGroups[i][0].equals("|x|")) {
+                answer.append(" ");
+                answer.append(mapOfGroups[i][0]);
+            }
+            else {
+                answer.append("  ");
+                answer.append(mapOfGroups[i][0]);
+            }
+            for (int j = 1; j < mapOfGroups[0].length; ++j) {
+                if (mapOfGroups[i][j - 1].equals(mapOfGroups[i][j])) {
+                    if (mapOfGroups[i][j].equals("|x|")) {
+                        answer.append(" ");
+                        answer.append(mapOfGroups[i][j]);
+                    }
+                    else {
+                        answer.append("   ");
+                        answer.append(mapOfGroups[i][j]);
+                    }
+                }
+                else {
+                    answer.append("  ");
+                    answer.append(mapOfGroups[i][j]);
+                }
+            }
+            answer.append('\n');
+        }
+        return answer.toString();
+    }
+
+    private String generateReport(List<Integer> countPersInGroups) {
+        List<RiskGroup> allRiskGroups = calculCountGroup(countPersInGroups);
+
+
 
         return "";
+    }
+
+    private List<RiskGroup> calculCountGroup(List<Integer> countPersInGroups) {
+        int countGroup = 0;
+        List<RiskGroup> allRiskGroups = new ArrayList<>();
+
+        allRiskGroups.add(new RiskGroup("CRITICAL", 0));
+        allRiskGroups.add(new RiskGroup("MAJOR", 0));
+        allRiskGroups.add(new RiskGroup("NORMAL", 0));
+        allRiskGroups.add(new RiskGroup("MINOR", 0));
+        allRiskGroups.add(new RiskGroup("NONE", 0));
+
+        for (Integer item : countPersInGroups) {
+            if (item > 13) {
+                ++allRiskGroups.get(4).countGroup;
+            }
+            if (item >= 8 && item <= 13) {
+                ++allRiskGroups.get(3).countGroup;
+            }
+            if (item >= 7 && item <= 5) {
+                ++allRiskGroups.get(2).countGroup;
+            }
+            if (item >= 4 && item <= 3) {
+                ++allRiskGroups.get(1).countGroup;
+            }
+            if (item >= 2 && item <= 1) {
+                ++allRiskGroups.get(0).countGroup;
+            }
+        }
+        return allRiskGroups;
     }
 }

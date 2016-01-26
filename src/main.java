@@ -1,20 +1,10 @@
-import java.util.ArrayDeque;
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class main {
 
     public static void main(String[] args) {
-        Queue<Integer> buffer = new LinkedList<>();
+        PeopleField pf = new PeopleField(3, 3, 0.5);
 
-        buffer.offer(54);
-        buffer.offer(0);
-        buffer.offer(3);
-        buffer.offer(5);
-        buffer.offer();
+        System.out.println(pf.printMap());
 
-        Integer i = buffer.remove();
-
-        Double d = 0.0;
+        int i = 0;
     }
 }
