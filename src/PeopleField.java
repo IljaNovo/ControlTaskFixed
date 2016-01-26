@@ -61,7 +61,7 @@ public class PeopleField {
 
         for (int i = 0; i < this.mapOfGroups.length; ++i) {
             for (int j = 0; j < this.mapOfGroups[0].length; ++j) {
-                if (viewedPeople[i][j] != true) {
+                if (mapOfGroups[i][j].equals("|x|") && viewedPeople[i][j] != true) {
                     countPersInGroups.add(identifGroup(viewedPeople, new CoordinMan(i, j)));
                 }
             }
@@ -73,6 +73,7 @@ public class PeopleField {
         Queue<CoordinMan> buffer = new LinkedList<>();
         buffer.offer(man);
         CoordinMan tempMan = null;
+        viewedPeople[man.row][man.column] = true;
 
         int countPersons = 0;
 
@@ -193,13 +194,13 @@ public class PeopleField {
             if (item >= 8 && item <= 13) {
                 ++allRiskGroups.get(3).countGroup;
             }
-            if (item >= 7 && item <= 5) {
+            if (item >= 5 && item <= 7) {
                 ++allRiskGroups.get(2).countGroup;
             }
-            if (item >= 4 && item <= 3) {
+            if (item >= 3 && item <= 4) {
                 ++allRiskGroups.get(1).countGroup;
             }
-            if (item >= 2 && item <= 1) {
+            if (item >= 1 && item <= 2) {
                 ++allRiskGroups.get(0).countGroup;
             }
         }
