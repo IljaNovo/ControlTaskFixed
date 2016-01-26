@@ -1,16 +1,15 @@
 public class main {
 
     public static void main(String[] args) {
-        String[][] temp = new String[2][2];
+        String[][] groups = new String[2][2];
 
-        temp[1][1] = "flf";
+        String[][] clone = new String[groups.length][groups[0].length];
 
-        foo(temp);
+        for (int i = 0; i < groups.length; ++i) {
+            clone[i] = groups[0].clone();
+        }
+        clone[0][0] = "fdhsf";
 
-        Integer i = 9;
-    }
-
-    private static void foo(String[][] temp) {
-        temp[1][0] = "fdff";
+        Integer i = 0;
     }
 }
