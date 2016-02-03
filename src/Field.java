@@ -6,7 +6,7 @@ public class Field implements Cloneable {
 
     private CellStateSector[][] sector;
 
-    public Field(Integer rows, Integer columns, Double fillFactor) {
+    public Field(int rows, int columns, double fillFactor) {
         if (fillFactor < 0.0 || fillFactor > 1.0 ||
                 rows < 1 || columns < 1) {
             throw new IllegalArgumentException();
@@ -18,7 +18,11 @@ public class Field implements Cloneable {
         if (sector == null) {
             throw new IllegalArgumentException();
         }
-        this.sector = sector.clone();
+        this.sector = new CellStateSector[sector.length][sector[0].length];
+
+        for (int i = 0; i < sector.length; ++i) {
+            this.sector[i] = sector[i].clone();
+        }
     }
 
     public int getRows() {
