@@ -4,7 +4,7 @@ public class Parser {
 
     public Parser() { }
 
-    private Option createOption(String opt, String description) {
+    private static Option createOption(String opt, String description) {
         Option newOption = new Option(opt, true, description);
         newOption.setOptionalArg(false);
 

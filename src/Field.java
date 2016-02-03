@@ -32,7 +32,7 @@ public class Field {
         return sector.length;
     }
 
-    public CellStateSector getCellOfIndex(int row, int column) {
+    public CellStateSector getCell(int row, int column) {
         if (row < 0 || row >= sector[0].length
                 || column < 0 || column > sector.length)
         {
