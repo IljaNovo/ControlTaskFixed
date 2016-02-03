@@ -1,3 +1,4 @@
+import java.text.ParseException;
 import java.util.Map;
 
 public class main {
@@ -5,7 +6,7 @@ public class main {
     public static void main(String[] args) {
         ParserParams parsParams = new ParserParams();
         Map<String, String> valuesParams = null;
-        PeopleField pf = null;
+        Field pf = null;
 
         try {
             valuesParams = parsParams.parseRowsColumnsProbab(args);
@@ -14,11 +15,11 @@ public class main {
             Integer columns = Integer.valueOf(valuesParams.get("Columns"));
             Double probability = Double.valueOf(valuesParams.get("Probability"));
 
-            pf = new PeopleField(rows, columns, probability);
+            pf = new Field(rows, columns, probability);
 
             System.out.println(pf.searchGroup());
         }
-        catch (ParseCommandLineException e) {
+        catch (ParseException e) {
             System.out.println("Invalid input data");
         }
         catch (IllegalArgumentException e) {

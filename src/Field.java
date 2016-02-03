@@ -1,6 +1,8 @@
 import java.util.*;
 
-public class PeopleField {
+public class Field {
+
+
 
     private final class RiskGroup {
         public String name;
@@ -24,7 +26,7 @@ public class PeopleField {
     }
     private String[][] mapOfGroups;
 
-    public PeopleField(Integer rows, Integer columns, Double fillFactor) {
+    public Field(Integer rows, Integer columns, Double fillFactor) {
         if (fillFactor < 0.0 || fillFactor > 1.0 ||
                 rows < 1 || columns < 1) {
             throw new IllegalArgumentException();

@@ -1,11 +1,11 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-public class PeopleFieldTest {
+public class FieldTest {
 
     @Test
     public void testGenerateField() throws Exception {
-        PeopleField pf = new PeopleField(3, 3, 1.0);
+        Field pf = new Field(3, 3, 1.0);
         String[][] answer = pf.getPeopleField();
         boolean flag = true;
 
@@ -25,7 +25,7 @@ public class PeopleFieldTest {
     @Test
     public void testInvalidDateCreateField() throws Exception {
         try {
-            PeopleField pf = new PeopleField(-3, 3, 3.0);
+            Field pf = new Field(-3, 3, 3.0);
         }
         catch (IllegalArgumentException e) {
             Assert.assertTrue(true);

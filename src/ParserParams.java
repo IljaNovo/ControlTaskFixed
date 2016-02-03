@@ -1,8 +1,5 @@
 import org.apache.commons.cli.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ParserParams {
 
     public ParserParams() { }
@@ -14,39 +11,9 @@ public class ParserParams {
         return newOption;
     }
 
-    public Map<String, String> parseWriteRead(String[] commandLineArguments) throws ParseCommandLineException {
+    public Input parseParams(String[] commandLineArguments) throws ParseException {
         if (commandLineArguments == null) {
-            throw new ParseCommandLineException();
-        }
-        Options posixOptions = new Options();
-
-        posixOptions.addOption(createOption("w", "Write"));
-        posixOptions.addOption(createOption("r", "Read"));
-
-        CommandLineParser cmdLinePosixParser = new PosixParser();
-        CommandLine commandLine = null;
-        Map<String, String> valuesParams = new HashMap<>();
-
-        try {
-            commandLine = cmdLinePosixParser.parse(posixOptions, commandLineArguments);
-
-            if (commandLine.hasOption("w") && commandLine.hasOption("r")) {
-                valuesParams.put("Read", commandLine.getOptionValue("r"));
-                valuesParams.put("Write", commandLine.getOptionValue("w"));
-            }
-            else {
-                throw new ParseCommandLineException();
-            }
-        }
-        catch (Throwable e) {
-            throw new ParseCommandLineException();
-        }
-        return valuesParams;
-    }
-
-    public Map<String, String> parseRowsColumnsProbab(String[] commandLineArguments) throws ParseCommandLineException {
-        if (commandLineArguments == null) {
-            throw new ParseCommandLineException();
+            throw new ParseException("invalid input data of command line");
         }
         Options posixOptions = new Options();
 
@@ -56,24 +23,15 @@ public class ParserParams {
 
         CommandLineParser cmdLinePosixParser = new PosixParser();
         CommandLine commandLine = null;
-        Map<String, String> valuesParams = new HashMap<>();
 
-        try {
-            commandLine = cmdLinePosixParser.parse(posixOptions, commandLineArguments);
+        commandLine = cmdLinePosixParser.parse(posixOptions, commandLineArguments);
 
-            if (commandLine.hasOption("r") && commandLine.hasOption("c") &&
-                    commandLine.hasOption("p")) {
-                valuesParams.put("Rows", commandLine.getOptionValue("r"));
-                valuesParams.put("Columns", commandLine.getOptionValue("c"));
-                valuesParams.put("Probability", commandLine.getOptionValue("p"));
-            }
-            else {
-                throw new ParseCommandLineException();
-            }
-        }
-        catch (Throwable e) {
-            throw new ParseCommandLineException();
-        }
-        return valuesParams;
+        commandLine.getOptionValue("r");
+        commandLine.getOptionValue("c");
+        commandLine.getOptionValue("p");
+
+        return new Input(Integer.valueOf(commandLine.getOptionValue("r")),
+                Integer.valueOf(commandLine.getOptionValue("c")),
+                Double.valueOf(commandLine.getOptionValue("p")));
     }
 }
