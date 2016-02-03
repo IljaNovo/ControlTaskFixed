@@ -2,8 +2,6 @@ import java.util.*;
 
 public class Field {
 
-
-
     private final class RiskGroup {
         public String name;
         public Integer countGroup;
@@ -24,46 +22,71 @@ public class Field {
             this.column = column;
         }
     }
-    private String[][] mapOfGroups;
+    private CellStateSector[][] sector;
+
+    public int getRows() {
+        return sector[0].length;
+    }
+
+    public int getColumn() {
+        return sector.length;
+    }
+
+    public CellStateSector getCellOfIndex(int row, int column) {
+        if (row < 0 || row >= sector[0].length
+                || column < 0 || column > sector.length)
+        {
+            throw new IndexOutOfBoundsException();
+        }
+        return sector[row][column];
+    }
+
+    public void setCellOfIndex(int row, int column, CellStateSector state) {
+        if (row < 0 || row >= sector[0].length
+                || column < 0 || column > sector.length)
+        {
+            throw new IndexOutOfBoundsException();
+        }
+        sector[row][column] = state;
+    }
 
     public Field(Integer rows, Integer columns, Double fillFactor) {
         if (fillFactor < 0.0 || fillFactor > 1.0 ||
                 rows < 1 || columns < 1) {
             throw new IllegalArgumentException();
         }
-        mapOfGroups = new String[rows][columns];
-        generateField(fillFactor, mapOfGroups);
+        sector = new CellStateSector[rows][columns];
     }
 
     public String[][] getPeopleField() {
-        String[][] clone = new String[mapOfGroups.length][mapOfGroups[0].length];
+        String[][] clone = new String[sector.length][sector[0].length];
 
-        for (int i = 0; i < mapOfGroups.length; ++i) {
-            clone[i] = mapOfGroups[0].clone();
+        for (int i = 0; i < sector.length; ++i) {
+            clone[i] = sector[0].clone();
         }
         return clone;
     }
 
     private void generateField(Double fillFactor, String[][] group) {
-        for (int i = 0; i < this.mapOfGroups.length; ++i) {
-            for (int j = 0; j < this.mapOfGroups[0].length; ++j) {
+        for (int i = 0; i < this.sector.length; ++i) {
+            for (int j = 0; j < this.sector[0].length; ++j) {
                 if (Math.random() <= fillFactor) {
-                    mapOfGroups[i][j] = "|x|";
+                    sector[i][j] = "|x|";
                 }
                 else {
-                    mapOfGroups[i][j] = "-";
+                    sector[i][j] = "-";
                 }
             }
         }
     }
 
     public String searchGroup() {
-        boolean[][] viewedPeople = new boolean[this.mapOfGroups.length][this.mapOfGroups[0].length];
+        boolean[][] viewedPeople = new boolean[this.sector.length][this.sector[0].length];
         List<Integer> countPersInGroups = new ArrayList<>();
 
-        for (int i = 0; i < this.mapOfGroups.length; ++i) {
-            for (int j = 0; j < this.mapOfGroups[0].length; ++j) {
-                if (mapOfGroups[i][j].equals("|x|") && viewedPeople[i][j] != true) {
+        for (int i = 0; i < this.sector.length; ++i) {
+            for (int j = 0; j < this.sector[0].length; ++j) {
+                if (sector[i][j].equals("|x|") && viewedPeople[i][j] != true) {
                     countPersInGroups.add(identifGroup(viewedPeople, new CoordinMan(i, j)));
                 }
             }
@@ -108,7 +131,7 @@ public class Field {
         if ((row >= 0 && row < viewedPeople[0].length) &&
                 (column >= 0 && column < viewedPeople.length) &&
                 (viewedPeople[row][column] != true)) {
-            if (this.mapOfGroups[row][column].equals("|x|")) {
+            if (this.sector[row][column].equals("|x|")) {
                 return true;
             }
             else {
@@ -123,37 +146,37 @@ public class Field {
     public String printMap() {
         StringBuilder answer = new StringBuilder();
 
-        for (int i = 0; i < mapOfGroups[0].length; ++i) {
+        for (int i = 0; i < sector[0].length; ++i) {
             answer.append("   ");
             answer.append(i);
         }
         answer.append('\n');
 
-        for (int i = 0; i < mapOfGroups.length; ++i) {
+        for (int i = 0; i < sector.length; ++i) {
             answer.append(i);
 
-            if (mapOfGroups[i][0].equals("|x|")) {
+            if (sector[i][0].equals("|x|")) {
                 answer.append(" ");
-                answer.append(mapOfGroups[i][0]);
+                answer.append(sector[i][0]);
             }
             else {
                 answer.append("  ");
-                answer.append(mapOfGroups[i][0]);
+                answer.append(sector[i][0]);
             }
-            for (int j = 1; j < mapOfGroups[0].length; ++j) {
-                if (mapOfGroups[i][j - 1].equals(mapOfGroups[i][j])) {
-                    if (mapOfGroups[i][j].equals("|x|")) {
+            for (int j = 1; j < sector[0].length; ++j) {
+                if (sector[i][j - 1].equals(sector[i][j])) {
+                    if (sector[i][j].equals("|x|")) {
                         answer.append(" ");
-                        answer.append(mapOfGroups[i][j]);
+                        answer.append(sector[i][j]);
                     }
                     else {
                         answer.append("   ");
-                        answer.append(mapOfGroups[i][j]);
+                        answer.append(sector[i][j]);
                     }
                 }
                 else {
                     answer.append("  ");
-                    answer.append(mapOfGroups[i][j]);
+                    answer.append(sector[i][j]);
                 }
             }
             answer.append('\n');

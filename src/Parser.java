@@ -1,8 +1,8 @@
 import org.apache.commons.cli.*;
 
-public class ParserParams {
+public class Parser {
 
-    public ParserParams() { }
+    public Parser() { }
 
     private Option createOption(String opt, String description) {
         Option newOption = new Option(opt, true, description);
@@ -11,7 +11,7 @@ public class ParserParams {
         return newOption;
     }
 
-    public Input parseParams(String[] commandLineArguments) throws ParseException {
+    public static Input parseParams(String[] commandLineArguments) throws ParseException {
         if (commandLineArguments == null) {
             throw new ParseException("invalid input data of command line");
         }
