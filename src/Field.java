@@ -1,28 +1,25 @@
+import javafx.scene.control.Cell;
+
 import java.util.*;
 
-public class Field {
+public class Field implements Cloneable {
 
-    private final class RiskGroup {
-        public String name;
-        public Integer countGroup;
-
-        public RiskGroup(String name, Integer countGroup) {
-            this.name = name;
-            this.countGroup = countGroup;
-        }
-    }
-
-    private final class CoordinMan {
-
-        public int row;
-        public int column;
-
-        public CoordinMan(int row, int column) {
-            this.row = row;
-            this.column = column;
-        }
-    }
     private CellStateSector[][] sector;
+
+    public Field(Integer rows, Integer columns, Double fillFactor) {
+        if (fillFactor < 0.0 || fillFactor > 1.0 ||
+                rows < 1 || columns < 1) {
+            throw new IllegalArgumentException();
+        }
+        sector = new CellStateSector[rows][columns];
+    }
+
+    public Field(CellStateSector[][] sector) {
+        if (sector == null) {
+            throw new IllegalArgumentException();
+        }
+        this.sector = sector.clone();
+    }
 
     public int getRows() {
         return sector[0].length;
@@ -41,7 +38,7 @@ public class Field {
         return sector[row][column];
     }
 
-    public void setCellOfIndex(int row, int column, CellStateSector state) {
+    public void setCell(int row, int column, CellStateSector state) {
         if (row < 0 || row >= sector[0].length
                 || column < 0 || column > sector.length)
         {
@@ -50,97 +47,15 @@ public class Field {
         sector[row][column] = state;
     }
 
-    public Field(Integer rows, Integer columns, Double fillFactor) {
-        if (fillFactor < 0.0 || fillFactor > 1.0 ||
-                rows < 1 || columns < 1) {
-            throw new IllegalArgumentException();
-        }
-        sector = new CellStateSector[rows][columns];
-    }
-
-    public String[][] getPeopleField() {
-        String[][] clone = new String[sector.length][sector[0].length];
+    public Field clone() throws CloneNotSupportedException{
+        CellStateSector[][] cloneSector = new CellStateSector[sector.length][sector[0].length];
 
         for (int i = 0; i < sector.length; ++i) {
-            clone[i] = sector[0].clone();
+            cloneSector[i] = sector[0].clone();
         }
+        Field clone = new Field(cloneSector);
+
         return clone;
-    }
-
-    private void generateField(Double fillFactor, String[][] group) {
-        for (int i = 0; i < this.sector.length; ++i) {
-            for (int j = 0; j < this.sector[0].length; ++j) {
-                if (Math.random() <= fillFactor) {
-                    sector[i][j] = "|x|";
-                }
-                else {
-                    sector[i][j] = "-";
-                }
-            }
-        }
-    }
-
-    public String searchGroup() {
-        boolean[][] viewedPeople = new boolean[this.sector.length][this.sector[0].length];
-        List<Integer> countPersInGroups = new ArrayList<>();
-
-        for (int i = 0; i < this.sector.length; ++i) {
-            for (int j = 0; j < this.sector[0].length; ++j) {
-                if (sector[i][j].equals("|x|") && viewedPeople[i][j] != true) {
-                    countPersInGroups.add(identifGroup(viewedPeople, new CoordinMan(i, j)));
-                }
-            }
-        }
-        return generateReport(countPersInGroups);
-    }
-
-    private int identifGroup(boolean[][] viewedPeople, CoordinMan man) {
-        Queue<CoordinMan> buffer = new LinkedList<>();
-        buffer.offer(man);
-        CoordinMan tempMan = null;
-        viewedPeople[man.row][man.column] = true;
-
-        int countPersons = 0;
-
-        while (buffer.size() != 0) {
-            tempMan = buffer.remove();
-
-            ++countPersons;
-
-            addNeighborInGroup(viewedPeople, buffer, tempMan.row - 1, tempMan.column);
-            addNeighborInGroup(viewedPeople, buffer, tempMan.row, tempMan.column + 1);
-            addNeighborInGroup(viewedPeople, buffer, tempMan.row + 1, tempMan.column);
-            addNeighborInGroup(viewedPeople, buffer, tempMan.row, tempMan.column - 1);
-        }
-        return countPersons;
-    }
-
-    private boolean addNeighborInGroup(boolean[][] viewedPeople, Queue<CoordinMan> buffer,
-                                       int row, int column) {
-        if(checkNeighborPerson(viewedPeople, row, column)) {
-            buffer.offer(new CoordinMan(row, column));
-            viewedPeople[row][column] = true;
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    private boolean checkNeighborPerson(boolean[][] viewedPeople, int row, int column) {
-        if ((row >= 0 && row < viewedPeople[0].length) &&
-                (column >= 0 && column < viewedPeople.length) &&
-                (viewedPeople[row][column] != true)) {
-            if (this.sector[row][column].equals("|x|")) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            return false;
-        }
     }
 
     public String printMap() {

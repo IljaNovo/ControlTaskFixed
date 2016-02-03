@@ -1,4 +1,5 @@
-public enum CellStateSector {
+public enum CellStateSector{
     EMPTY,
-    PEOPLE
+    PEOPLE;
+
 }
