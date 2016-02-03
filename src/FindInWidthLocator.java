@@ -66,7 +66,6 @@ public class FindInWidthLocator implements Locator {
         if (checkCellView(flagOfCells, sector, cell.getRow() + 1, cell.getColumn())) {
             ++countFindPerson;
             flagOfCells[cell.getRow() + 1][cell.getColumn()] = true;
-
         }
         if (checkCellView(flagOfCells, sector, cell.getRow() - 1, cell.getColumn())) {
             ++countFindPerson;
