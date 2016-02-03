@@ -4,6 +4,10 @@ public class FindInWidthLocator implements Locator {
 
     List<RiskGroup> stateRiskGroup;
 
+    public List<RiskGroup> getStateRiskGroup() {
+        return new ArrayList<>(stateRiskGroup);
+    }
+
     public FindInWidthLocator(List<RiskGroup> stateRiskGroup) {
         this.stateRiskGroup = new LinkedList<>(stateRiskGroup);
     }
@@ -105,6 +109,7 @@ public class FindInWidthLocator implements Locator {
                 }
             }
             riskGroups.put(group.getName(), countGroup);
+            countGroup = 0;
         }
         return riskGroups;
     }

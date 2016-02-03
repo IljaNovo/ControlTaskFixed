@@ -5,7 +5,7 @@ public class FieldTest {
 
     @Test
     public void testGenerateField() throws Exception {
-        Field pf = new Field(3, 3, 1.0);
+        Field sector = new Field(3, 3, 1.0);
         String[][] answer = pf.getPeopleField();
         boolean flag = true;
 
