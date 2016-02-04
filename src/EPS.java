@@ -8,6 +8,7 @@ public class EPS {
 
     public static void main(String[] args) {
 
+//            pf = new Field(rows, columns, prob
         Map<String, Integer> riskGroups = null;
         Input params = null;
         Field sector = null;
@@ -38,29 +39,5 @@ public class EPS {
         catch (CloneNotSupportedException e) {
             e.getStackTrace();
         }
-
-//        try {
-//            valuesParams = parsParams.parseRowsColumnsProbab(args);
-//
-//            Integer rows = Integer.valueOf(valuesParams.get("Rows"));
-//            Integer columns = Integer.valueOf(valuesParams.get("Columns"));
-//            Double probability = Double.valueOf(valuesParams.get("Probability"));
-//
-//            pf = new Field(rows, columns, probability);
-//
-//            System.out.println(pf.searchGroup());
-//        }
-//        catch (ParseException e) {
-//            System.out.println("Invalid input data");
-//        }
-//        catch (IllegalArgumentException e) {
-//            System.out.println("Invalid input data");
-//        }
-//        catch (Throwable e) {
-//            System.out.println("Invalid input data");
-//        }
-//
-//        int i = 0;
-//    }
     }
 }

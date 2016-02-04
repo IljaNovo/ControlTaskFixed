@@ -46,40 +46,57 @@ public class FindInWidthLocator implements Locator {
         return splitIntoGroups(peopleGroups);
     }
 
+    /*
+    * in, out
+    * */
     private int findCountPeople(boolean[][] flagOfCells, Field sector, CellIndices currentCell) {
         Queue<CellIndices> buffer = new LinkedList<>();
         buffer.offer(currentCell);
-        int countFindPerson = 0;
+        int countFindPerson = 1;
         CellIndices tempCell;
 
         while (buffer.size() != 0) {
             tempCell = buffer.remove();
             flagOfCells[tempCell.getRow()][tempCell.getColumn()] = true;
-            countFindPerson += findAllNeighbors(flagOfCells, sector, tempCell);
+            countFindPerson += findAllNeighbors(flagOfCells, buffer, sector, tempCell);
         }
         return countFindPerson;
     }
 
-    private int findAllNeighbors(boolean[][] flagOfCells, Field sector, CellIndices cell) {
+    /*
+    * in, out
+    * */
+    private int findAllNeighbors(boolean[][] flagOfCells, Queue<CellIndices> buffer, Field sector, CellIndices cell) {
         int countFindPerson = 0;
 
-        if (checkCellView(flagOfCells, sector, cell.getRow() + 1, cell.getColumn())) {
+        if (addCellInBuffer(flagOfCells, sector, buffer, cell.getRow() + 1, cell.getColumn())) {
             ++countFindPerson;
-            flagOfCells[cell.getRow() + 1][cell.getColumn()] = true;
         }
-        if (checkCellView(flagOfCells, sector, cell.getRow() - 1, cell.getColumn())) {
+        if (addCellInBuffer(flagOfCells, sector, buffer, cell.getRow() - 1, cell.getColumn())) {
             ++countFindPerson;
-            flagOfCells[cell.getRow() - 1][cell.getColumn()] = true;
         }
-        if (checkCellView(flagOfCells, sector, cell.getRow(), cell.getColumn() + 1)) {
+        if (addCellInBuffer(flagOfCells, sector, buffer, cell.getRow(), cell.getColumn() + 1)) {
             ++countFindPerson;
-            flagOfCells[cell.getRow()][cell.getColumn() + 1] = true;
         }
-        if (checkCellView(flagOfCells, sector, cell.getRow(), cell.getColumn() - 1)) {
+        if (addCellInBuffer(flagOfCells, sector, buffer, cell.getRow(), cell.getColumn() - 1)) {
             ++countFindPerson;
-            flagOfCells[cell.getRow()][cell.getColumn() - 1] = true;
         }
         return  countFindPerson;
+    }
+
+    /*
+    * in, out
+    * */
+    private boolean addCellInBuffer(boolean[][] flagOfCells, Field sector,
+                                    Queue<CellIndices> buffer, int row, int column) {
+        if (checkCellView(flagOfCells, sector, row, column)) {
+            flagOfCells[row][column] = true;
+            buffer.offer(new CellIndices(row, column));
+            return true;
+        }
+        else  {
+            return false;
+        }
     }
 
     private boolean checkCellView(boolean[][] flagOfCells, Field sector , int row, int column) {

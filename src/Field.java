@@ -51,7 +51,7 @@ public class Field implements Cloneable {
         CellStateSector[][] cloneSector = new CellStateSector[sector.length][sector[0].length];
 
         for (int i = 0; i < sector.length; ++i) {
-            cloneSector[i] = sector[0].clone();
+            cloneSector[i] = sector[i].clone();
         }
         Field clone = new Field(cloneSector);
 
