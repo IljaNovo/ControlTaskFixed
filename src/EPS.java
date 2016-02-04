@@ -7,8 +7,6 @@ import java.util.Map;
 public class EPS {
 
     public static void main(String[] args) {
-
-//            pf = new Field(rows, columns, prob
         Map<String, Integer> riskGroups = null;
         Input params = null;
         Field sector = null;
@@ -16,7 +14,7 @@ public class EPS {
 
         try {
             params = Parser.parseParams(args);
-            sector = new Field(params.getCountRows(), params.getCountColumn(), params.getFillFactor());
+            sector = new Field(params.getCountRows(), params.getCountColumn());
             GeneratorField.generate(sector, params.getFillFactor());
 
             stateRiskGroup = new ArrayList<>();
@@ -34,6 +32,10 @@ public class EPS {
             System.out.println(Reporter.generate(sector, riskGroups, params.getFillFactor(), stateRiskGroup));
         }
         catch (ParseException e) {
+            System.out.println("invalid data in command line.");
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("invalid data in command line.");
             e.getStackTrace();
         }
         catch (CloneNotSupportedException e) {

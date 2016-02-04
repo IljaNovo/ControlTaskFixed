@@ -6,7 +6,9 @@ public class Input {
 
     public Input(int countRows, int countColumn, double fillFactor) {
         if (countRows < 0 || countColumn < 0
-                || fillFactor < 0 || fillFactor > 1.0)
+                || fillFactor < 0 || fillFactor > 1.0
+                || countRows > Integer.MAX_VALUE - 1
+                || countColumn > Integer.MAX_VALUE - 1)
         {
             throw new IllegalArgumentException();
         }

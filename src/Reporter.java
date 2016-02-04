@@ -58,8 +58,6 @@ public class Reporter {
         return answer.toString();
     }
 
-
-
     private static String generateLineBreak() {
         return "\n";
     }

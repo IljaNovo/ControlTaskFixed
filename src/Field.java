@@ -2,9 +2,8 @@ public class Field implements Cloneable {
 
     private CellStateSector[][] sector;
 
-    public Field(int rows, int columns, double fillFactor) {
-        if (fillFactor < 0.0 || fillFactor > 1.0 ||
-                rows < 1 || columns < 1) {
+    public Field(int rows, int columns) {
+        if (rows < 1 || columns < 1) {
             throw new IllegalArgumentException();
         }
         sector = new CellStateSector[rows][columns];
