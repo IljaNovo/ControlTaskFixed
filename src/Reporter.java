@@ -5,6 +5,9 @@ public class Reporter {
 
     public static String generate(Field sector, Map<String, Integer> riskGroups,
                                   double fillFactor, List<RiskGroup> stateRiskGroups) {
+        if (sector == null || riskGroups == null || stateRiskGroups == null) {
+            return "";
+        }
         StringBuilder answer = new StringBuilder();
 
         answer.append(printSizeField(sector));
